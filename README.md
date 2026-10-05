@@ -30,6 +30,6 @@ Tech Stack
 Author
 
 Archana Priyadarshini Mishra
-BCA Student | Frontend Developer in progress
+| Frontend Developer in progress
 
 [GitHub](https://github.com/mikun-011)
