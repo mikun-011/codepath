@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CodePath — Frontend Learning  Hub</title>
+<link rel="icon" href="icon/bulb.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=League+Spartan:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Code<span>Path</span></div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('home')">Home</button>
+    <button class="nav-link" onclick="showPage('notes')">Notes</button>
+    <button class="nav-link" onclick="showPage('quiz')">Quiz</button>
+  </div>
+</nav>
+<!-- ===== HOME ===== -->
+<section id="home" class="page active">
+  <div class="page-fx" aria-hidden="true"><div class="fx-grid"></div><div class="fx-blob b1"></div><div class="fx-blob b2"></div><div class="fx-blob b3"></div><div class="fx-spot"></div></div>
+  <div class="home-orb o1"></div><div class="home-orb o2"></div>
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">✦ Built for Freshers</div>
+      <h1 class="hero-title">
+        Learn Frontend.<br>
+        <span class="line2">Test Yourself.</span><br>
+      </h1>
+      <p class="hero-sub">
+        Concise notes on <span style="color:var(--html);font-weight:500">HTML</span>, <span style="color:var(--css);font-weight:500">CSS</span> &amp; <span style="color:var(--js);font-weight:500">JavaScript</span> — from the basics to the patterns that actually matter.
+      </p>
+      <div class="hero-btns">
+        <button class="btn btn-primary" onclick="showPage('notes')">Start Learning →</button>
+        <button class="btn btn-ghost" onclick="showPage('quiz')">Take a Quiz</button>
+      </div>
+      <button class="continue-chip" id="continue-chip" onclick="continueLearning()">↻ Continue: <span id="continue-label"></span></button>
+    </div>
+    <div class="hero-right">
+      <div class="topic-card html" onclick="openNotes('html')">
+        <div class="topic-icon html">&lt;/&gt;</div>
+        <div class="topic-info">
+          <div class="topic-name" style="color:var(--html)">HTML</div>
+          <div class="topic-desc">Structure, semantics, forms, accessibility</div>
+        </div>
+        <div class="topic-arrow">→</div>
+      </div>
+      <div class="topic-card css" onclick="openNotes('css')">
+        <div class="topic-icon css">#{ }</div>
+        <div class="topic-info">
+          <div class="topic-name" style="color:var(--css)">CSS</div>
+          <div class="topic-desc">Selectors, flexbox, grid, animations</div>
+        </div>
+        <div class="topic-arrow">→</div>
+      </div>
+      <div class="topic-card js" onclick="openNotes('js')">
+        <div class="topic-icon js">JS</div>
+        <div class="topic-info">
+          <div class="topic-name" style="color:var(--js)">JavaScript</div>
+          <div class="topic-desc">DOM, events, async, ES6+, APIs</div>
+        </div>
+        <div class="topic-arrow">→</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Topics</div></div>
+    <div class="stats-divider"></div>
+    <div class="stat"><div class="stat-n">30+</div><div class="stat-l">Notes</div></div>
+    <div class="stats-divider"></div>
+    <div class="stat"><div class="stat-n">60+</div><div class="stat-l">Quiz Questions</div></div>
+  </div>
+  <div class="dyk">
+    <div class="dyk-label">💡 Did you know?</div>
+    <div class="dyk-text" id="dyk-text"></div>
+    <div class="dyk-actions">
+      <button onclick="nextFact()">Another fact ↻</button>
+      <button onclick="showPage('quiz')">Think you know your stuff? Take a quiz →</button>
+    </div>
+  </div>
+</section>
+<!-- ===== NOTES ===== -->
+<section id="notes" class="page">
+  <div class="page-fx" aria-hidden="true"><div class="fx-grid"></div><div class="fx-blob b1"></div><div class="fx-blob b2"></div><div class="fx-blob b3"></div><div class="fx-spot"></div></div>
+  <div id="read-progress"></div>
+  <div class="mobile-bar">
+    <div class="m-progress"><span id="mp-count">0 / 0 read</span><div class="side-bar"><div id="mp-fill"></div></div><button class="reset-btn" onclick="resetProgress()">Reset</button></div>
+    <div class="mobile-topics" id="mobile-topics"></div>
+  </div>
+  <div class="notes-layout">
+    <!-- sidebar -->
+    <aside class="notes-sidebar">
+      <div class="side-progress"><div class="side-progress-top"><span>Your progress</span><span id="sp-count">0 / 0 read</span></div><div class="side-bar"><div id="sp-fill"></div></div><div class="side-note" id="sp-note"></div><button class="reset-btn" onclick="resetProgress()">Reset progress</button></div>
+      <div class="sidebar-section-label">HTML</div>
+      <div class="sidebar-item active" onclick="openNote('html-intro')"><span class="sidebar-dot dot-html"></span>Introduction</div>
+      <div class="sidebar-item" onclick="openNote('html-semantics')"><span class="sidebar-dot dot-html"></span>Semantic Tags</div>
+      <div class="sidebar-item" onclick="openNote('html-forms')"><span class="sidebar-dot dot-html"></span>Forms &amp; Inputs</div>
+      <div class="sidebar-item" onclick="openNote('html-blockinline')"><span class="sidebar-dot dot-html"></span>Block, Inline, ID &amp; Class</div>
+      <div class="sidebar-item" onclick="openNote('html-listtable')"><span class="sidebar-dot dot-html"></span>Lists &amp; Tables</div>
+      <div class="sidebar-item" onclick="openNote('html-apis')"><span class="sidebar-dot dot-html"></span>HTML APIs</div>
+      <div class="sidebar-section-label" style="margin-top:0.75rem">CSS</div>
+      <div class="sidebar-item" onclick="openNote('css-intro')"><span class="sidebar-dot dot-css"></span>Introduction</div>
+      <div class="sidebar-item" onclick="openNote('css-box')"><span class="sidebar-dot dot-css"></span>Box Model</div>
+      <div class="sidebar-item" onclick="openNote('css-flex')"><span class="sidebar-dot dot-css"></span>Flexbox &amp; Grid</div>
+      <div class="sidebar-item" onclick="openNote('css-selector')"><span class="sidebar-dot dot-css"></span>Selectors &amp; Specificity</div>
+      <div class="sidebar-item" onclick="openNote('css-units')"><span class="sidebar-dot dot-css"></span>Units, Display &amp; Position</div>
+      <div class="sidebar-item" onclick="openNote('css-animation')"><span class="sidebar-dot dot-css"></span>Pseudo, Transition &amp; Animation</div>
+      <div class="sidebar-section-label" style="margin-top:0.75rem">JavaScript</div>
+      <div class="sidebar-item" onclick="openNote('js-intro')"><span class="sidebar-dot dot-js"></span>Introduction</div>
+      <div class="sidebar-item" onclick="openNote('js-variables')"><span class="sidebar-dot dot-js"></span>Variables &amp; Data Types</div>
+      <div class="sidebar-item" onclick="openNote('js-strings')"><span class="sidebar-dot dot-js"></span>Strings</div>
+      <div class="sidebar-item" onclick="openNote('js-numbers')"><span class="sidebar-dot dot-js"></span>Numbers, Math &amp; Dates</div>
+      <div class="sidebar-item" onclick="openNote('js-arrays')"><span class="sidebar-dot dot-js"></span>Arrays</div>
+      <div class="sidebar-item" onclick="openNote('js-dom')"><span class="sidebar-dot dot-js"></span>DOM Manipulation</div>
+      <div class="sidebar-item" onclick="openNote('js-events')"><span class="sidebar-dot dot-js"></span>Events</div>
+      <div class="sidebar-item" onclick="openNote('js-async')"><span class="sidebar-dot dot-js"></span>Async / Promises</div>
+      <div class="sidebar-item" onclick="openNote('js-es6')"><span class="sidebar-dot dot-js"></span>ES6+ Features</div>
+    </aside>
+    <!-- content -->
+    <main class="notes-content">
+      <!--
+      ============================================================
+        HOW TO ADD YOUR NOTES
+      ============================================================
+        Each sidebar item maps to a <div class="note-section"> by ID.
+        Sidebar item             →   Note section ID
+        ─────────────────────────────────────────────
+        HTML → Introduction      →   note-html-intro
+        HTML → Semantic Tags     →   note-html-semantics
+        HTML → Forms & Inputs    →   note-html-forms
+        CSS  → Box Model         →   note-css-box
+        CSS  → Flexbox & Grid    →   note-css-flex
+        CSS  → Selectors         →   note-css-selector
+        JS   → Variables & Types →   note-js-basics
+        JS   → DOM Manipulation  →   note-js-dom
+        JS   → Events            →   note-js-events
+        JS   → Async / Promises  →   note-js-async
+        JS   → ES6+ Features     →   note-js-es6
+        INSIDE EACH SECTION, you can use these ready-made components:
+        1. NOTE CARD — a content block
+           <div class="note-card">
+             <div class="note-card-title">Your Title <span class="tag">label</span></div>
+             <p>Your paragraph text here.</p>
+             <ul><li>bullet point</li></ul>
+           </div>
+        2. CODE BLOCK — syntax-highlighted code
+           <pre>your code here</pre>
+           Span classes for highlighting:
+             <span class="kw">keyword</span>
+             <span class="fn">function / property</span>
+             <span class="str">string / value</span>
+             <span class="cm">comment</span>
+        3. INLINE CODE — <code>inline snippet</code>
+        4. TIP BOX — a highlighted tip or note
+           <div class="tip-box">
+             <span class="icon">💡</span>
+             <span>Your tip text here.</span>
+           </div>
+        5. QUIZ CTA — link to the quiz at the bottom of a section
+           <div class="quiz-cta">
+             <div class="quiz-cta-text"><strong>Ready?</strong> Test yourself.</div>
+             <button class="btn btn-primary" onclick="startQuizFor('HTML')">Take HTML Quiz →</button>
+           </div>
+        To ADD a new sidebar topic:
+          1. Add a sidebar item in the <aside> above
+          2. Add a matching <div class="note-section" id="note-YOUR-ID"> below
+          3. Done — the JS handles the rest automatically.
+      ============================================================
+      -->
+      <!-- HTML NOTES -->
+      <div class="note-section active" id="note-html-intro">
+        <div class="note-header">
+          <div class="note-badge badge-html">&lt;/&gt;</div>
+          <div class="note-title">HTML — Introduction</div>
+        </div>
+        <!-- What is HTML -->
+        <div class="note-card">
+          <div class="note-card-title">What is HTML? <span class="tag">definition</span></div>
+          <p>HTML (HyperText Markup Language) is a <strong style="color:var(--text)">syntactical / declarative language</strong> — it describes the structure of a webpage rather than defining logic or behaviour.</p>
+          <ul>
+            <li>The <strong style="color:var(--text)">standard markup language</strong> used to create the structure of a webpage</li>
+            <li>Invented by <strong style="color:var(--text)">Tim Berners-Lee in 1991</strong> to link documents together across the web</li>
+            <li><strong style="color:var(--text)">Case-insensitive</strong> — <code>&lt;P&gt;</code> and <code>&lt;p&gt;</code> are treated the same by browsers</li>
+            <li>Not a programming language — it has no variables, loops, or logic</li>
+          </ul>
+        </div>
+        <!-- Full form breakdown -->
+        <div class="note-card">
+          <div class="note-card-title">Breaking Down the Full Form <span class="tag">acronym</span></div>
+          <ul>
+            <li><strong style="color:var(--html)">H</strong> — <strong style="color:var(--text)">Hyper</strong>: non-linear — links let you jump between pages freely</li>
+            <li><strong style="color:var(--html)">T</strong> — <strong style="color:var(--text)">Text</strong>: the core content on a webpage</li>
+            <li><strong style="color:var(--html)">M</strong> — <strong style="color:var(--text)">Markup</strong>: wrapping content in tags to give it meaning</li>
+            <li><strong style="color:var(--html)">L</strong> — <strong style="color:var(--text)">Language</strong>: a defined set of rules and syntax</li>
+          </ul>
+          <div class="tip-box" style="margin-top:0.75rem">
+            <span class="icon">💡</span>
+            <span>"HyperText" refers to links — the very feature that makes the web a <em>web</em>.</span>
+          </div>
+        </div>
+        <!-- History timeline -->
+        <div class="note-card">
+          <div class="note-card-title">History of HTML <span class="tag">timeline</span></div>
+          <ul>
+            <li><code>1989</code> — Tim Berners-Lee invents the <strong style="color:var(--text)">World Wide Web (WWW)</strong></li>
+            <li><code>1991</code> — Tim Berners-Lee <strong style="color:var(--text)">invents HTML</strong> to link documents together</li>
+            <li><code>2014</code> — W3C recommends <strong style="color:var(--text)">HTML5</strong></li>
+            <li><code>2017</code> — W3C recommends <strong style="color:var(--text)">HTML 5.2</strong></li>
+            <li><code>Now</code> — Current version is the <strong style="color:var(--html)">HTML Living Standard</strong> (maintained by WHATWG, updated continuously)</li>
+          </ul>
+          <div class="tip-box" style="margin-top:0.75rem">
+            <span class="icon">🌐</span>
+            <span>The "Living Standard" means HTML is no longer versioned — it evolves continuously as browsers add new features.</span>
+          </div>
+        </div>
+        <!-- Quick facts card -->
+        <div class="note-card">
+          <div class="note-card-title">Quick Facts to Remember <span class="tag">summary</span></div>
+          <ul>
+            <li>Created by <strong style="color:var(--text)">Tim Berners-Lee</strong> — a British computer scientist at CERN</li>
+            <li>Original purpose: to <strong style="color:var(--text)">link research documents</strong> together over a network</li>
+            <li>Browsers read HTML top-to-bottom and render it as a visual page</li>
+            <li>Every HTML page is built from <strong style="color:var(--text)">elements</strong> made of opening &amp; closing tags</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Structure of an HTML Document <span class="tag">boilerplate</span></div>
+          <p>Every HTML page follows the same basic skeleton:</p>
+          <pre><span class="kw">&lt;!DOCTYPE html&gt;</span>   <span class="cm">→ tells the browser this is HTML5</span>
+<span class="kw">&lt;html&gt;</span>             <span class="cm">→ root element of the page</span>
+  <span class="kw">&lt;head&gt;</span>           <span class="cm">→ metadata, not visible on page</span>
+    <span class="kw">&lt;title&gt;</span>My Page<span class="kw">&lt;/title&gt;</span>
+  <span class="kw">&lt;/head&gt;</span>
+  <span class="kw">&lt;body&gt;</span>           <span class="cm">→ all visible content lives here</span>
+    <span class="kw">&lt;h1&gt;</span>Hello World<span class="kw">&lt;/h1&gt;</span>
+  <span class="kw">&lt;/body&gt;</span>
+<span class="kw">&lt;/html&gt;</span></pre>
+          <ul>
+            <li><code>&lt;!DOCTYPE html&gt;</code> — a declaration (not a tag) that puts the browser in HTML5 mode</li>
+            <li><code>&lt;html&gt;</code> — the root element; has exactly two children: <code>&lt;head&gt;</code> and <code>&lt;body&gt;</code></li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>&lt;head&gt;</code> vs <code>&lt;body&gt;</code> <span class="tag">layout</span></div>
+          <p>The <code>&lt;head&gt;</code> holds information <em>about</em> the page — nothing inside it is shown on screen. Common tags you'll find there:</p>
+          <ul>
+            <li><code>&lt;meta&gt;</code> — extra page info like character set or viewport sizing</li>
+            <li><code>&lt;title&gt;</code> — the text shown on the browser tab</li>
+            <li><code>&lt;link&gt;</code> — connects an external CSS file</li>
+            <li><code>&lt;style&gt;</code> — CSS written directly inside the page</li>
+          </ul>
+          <pre><span class="kw">&lt;meta</span> <span class="fn">charset</span>=<span class="str">"UTF-8"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;meta</span> <span class="fn">name</span>=<span class="str">"viewport"</span> <span class="fn">content</span>=<span class="str">"width=device-width, initial-scale=1.0"</span><span class="kw">&gt;</span>
+<span class="kw">&lt;link</span> <span class="fn">rel</span>=<span class="str">"stylesheet"</span> <span class="fn">href</span>=<span class="str">"style.css"</span><span class="kw">&gt;</span></pre>
+          <p>The <code>&lt;body&gt;</code>, on the other hand, holds everything the visitor actually sees — headings, paragraphs, links, images, forms, and so on.</p>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span>Simple way to remember it: <code>&lt;head&gt;</code> is the brain (info the browser needs), <code>&lt;body&gt;</code> is what people actually look at.</span>
+          </div>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done reading?</strong> Test yourself on HTML.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('HTML')">Take HTML Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-html-semantics">
+        <div class="note-header">
+          <div class="note-badge badge-html">&lt;/&gt;</div>
+          <div class="note-title">Semantic Tags</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What are Semantic Tags? <span class="tag">definition</span></div>
+          <p>Semantic tags are HTML elements that clearly describe their <strong style="color:var(--text)">meaning and purpose</strong> to both the browser and the developer. Unlike generic <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code>, semantic tags tell you exactly what role that section plays on the page.</p>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span>Semantic HTML improves <strong>SEO</strong>, <strong>accessibility</strong>, and makes code far easier to read and maintain.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>&lt;header&gt;</code> <span class="tag">layout</span></div>
+          <p>Defines the <strong style="color:var(--text)">top section</strong> of a webpage or a section. Typically contains the site logo, site title, or navigation bar.</p>
+          <ul>
+            <li>Example use: navbar, logo, hero banner</li>
+            <li>Can appear inside <code>&lt;article&gt;</code> or <code>&lt;section&gt;</code> too, not just the page top</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>&lt;nav&gt;</code> <span class="tag">navigation</span></div>
+          <p>Defines a section containing <strong style="color:var(--text)">navigation links</strong>. Used for menus, navbars, and table-of-contents links.</p>
+          <ul>
+            <li>Screen readers use <code>&lt;nav&gt;</code> to help users jump to navigation quickly</li>
+            <li>A page can have multiple <code>&lt;nav&gt;</code> elements (e.g. main nav + footer nav)</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>&lt;main&gt;</code> <span class="tag">layout</span></div>
+          <p>Represents the <strong style="color:var(--text)">dominant content</strong> of the <code>&lt;body&gt;</code> — the central topic of the page.</p>
+          <ul>
+            <li>⚠️ Only <strong>one</strong> <code>&lt;main&gt;</code> element is allowed per document</li>
+            <li>Should not include repeated content like sidebars, navbars, or footers</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>&lt;section&gt;</code> <span class="tag">grouping</span></div>
+          <p>Represents a <strong style="color:var(--text)">thematic grouping</strong> of content. Used to divide a page into meaningful, logically related parts.</p>
+          <ul>
+            <li>Example: "About", "Services", "Contact" sections on a landing page</li>
+            <li>Should ideally contain a heading (<code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code> etc.)</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>&lt;article&gt;</code> <span class="tag">content</span></div>
+          <p>Represents <strong style="color:var(--text)">independent, self-contained content</strong> that could stand alone if removed from the page.</p>
+          <ul>
+            <li>Example use: news article, blog post, forum thread, product card</li>
+            <li>Can be nested — an <code>&lt;article&gt;</code> can contain other <code>&lt;article&gt;</code> elements (e.g. comments)</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>&lt;footer&gt;</code> <span class="tag">layout</span></div>
+          <p>Defines the <strong style="color:var(--text)">bottom section</strong> of a webpage or section. Typically holds closing info.</p>
+          <ul>
+            <li>Example use: contact info, copyright notice, social links, sitemap</li>
+            <li>Like <code>&lt;header&gt;</code>, can appear inside <code>&lt;article&gt;</code> or <code>&lt;section&gt;</code></li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Quick Reference — All 6 Tags <span class="tag">summary</span></div>
+          <pre><span class="kw">&lt;header&gt;</span>   <span class="cm">→ top of page — logo, navbar</span>
+<span class="kw">&lt;nav&gt;</span>      <span class="cm">→ navigation links / menus</span>
+<span class="kw">&lt;main&gt;</span>     <span class="cm">→ primary content (only one per page)</span>
+<span class="kw">&lt;section&gt;</span>  <span class="cm">→ thematic grouping of content</span>
+<span class="kw">&lt;article&gt;</span>  <span class="cm">→ independent, self-contained content</span>
+<span class="kw">&lt;footer&gt;</span>   <span class="cm">→ bottom of page — links, copyright</span></pre>
+        </div>
+      </div>
+      <div class="note-section" id="note-html-forms">
+        <div class="note-header">
+          <div class="note-badge badge-html">&lt;/&gt;</div>
+          <div class="note-title">Forms &amp; Inputs</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Core Form Elements <span class="tag">tags</span></div>
+          <p>HTML forms collect user input and send data to a server. These are the key tags you'll use:</p>
+          <ul>
+            <li><code>&lt;form&gt;</code> — the wrapper; collects user input and sends data to a server</li>
+            <li><code>&lt;label&gt;</code> — defines a name for an input field; improves usability &amp; accessibility</li>
+            <li><code>&lt;input&gt;</code> — the most-used tag; takes user input (many types)</li>
+            <li><code>&lt;button&gt;</code> — clickable button; can submit or reset a form</li>
+            <li><code>&lt;textarea&gt;</code> — multi-line text input (e.g. comments, messages)</li>
+            <li><code>&lt;select&gt;</code> — creates a dropdown list (container)</li>
+            <li><code>&lt;option&gt;</code> — defines an individual item inside a <code>&lt;select&gt;</code></li>
+            <li><code>&lt;fieldset&gt;</code> — groups related form elements inside a bordered box</li>
+            <li><code>&lt;legend&gt;</code> — title / caption for a <code>&lt;fieldset&gt;</code></li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">♿</span>
+            <span><strong>Why is <code>&lt;label&gt;</code> important?</strong> It improves form usability and accessibility — clicking the label focuses its associated input, and screen readers announce the label aloud.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Basic Form Structure <span class="tag">example</span></div>
+          <pre><span class="kw">&lt;form</span> <span class="fn">action</span>=<span class="str">"/submit"</span> <span class="fn">method</span>=<span class="str">"POST"</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;fieldset&gt;</span>
+    <span class="kw">&lt;legend&gt;</span>Personal Info<span class="kw">&lt;/legend&gt;</span>
+    <span class="kw">&lt;label</span> <span class="fn">for</span>=<span class="str">"name"</span><span class="kw">&gt;</span>Name<span class="kw">&lt;/label&gt;</span>
+    <span class="kw">&lt;input</span> <span class="fn">type</span>=<span class="str">"text"</span> <span class="fn">id</span>=<span class="str">"name"</span> <span class="fn">required</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;/fieldset&gt;</span>
+  <span class="kw">&lt;button</span> <span class="fn">type</span>=<span class="str">"submit"</span><span class="kw">&gt;</span>Submit<span class="kw">&lt;/button&gt;</span>
+<span class="kw">&lt;/form&gt;</span></pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">All Input Types <span class="tag">reference</span></div>
+          <ul>
+            <li><code>text</code> — single-line text input</li>
+            <li><code>number</code> — numeric values only</li>
+            <li><code>email</code> — validates email format</li>
+            <li><code>password</code> — hidden text input (dots/asterisks)</li>
+            <li><code>reset</code> — clears all form fields</li>
+            <li><code>checkbox</code> — multiple choice (tick boxes)</li>
+            <li><code>radio</code> — single choice from a group</li>
+            <li><code>date</code> / <code>time</code> / <code>datetime</code> — date &amp; time pickers</li>
+            <li><code>week</code> / <code>month</code> — week or month selectors</li>
+            <li><code>url</code> — validates URL format</li>
+            <li><code>tel</code> — phone number input</li>
+            <li><code>search</code> — search fields (may show clear button)</li>
+            <li><code>range</code> — slider to select a numeric value</li>
+            <li><code>color</code> — color picker</li>
+            <li><code>file</code> — file upload input</li>
+            <li><code>image</code> — graphical submit button</li>
+            <li><code>button</code> — clickable button (no default behaviour)</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Form Attributes &amp; Validation <span class="tag">attributes</span></div>
+          <ul>
+            <li><code>action</code> — where form data is sent (URL)</li>
+            <li><code>method</code> — how data is sent: <code>GET</code> (visible in URL) or <code>POST</code> (hidden, more secure)</li>
+            <li><code>enctype</code> — how data is encoded; use <code>multipart/form-data</code> for file uploads</li>
+            <li><code>autocomplete</code> — enables / disables browser auto-fill suggestions</li>
+            <li><code>autocapitalize</code> — controls automatic capitalisation of text input</li>
+            <li><code>novalidate</code> — disables automatic HTML5 form validation</li>
+            <li><code>accept-charset</code> — specifies character encoding (UTF-8 or UTF-16)</li>
+            <li><code>placeholder</code> — hint text shown inside an empty input field</li>
+            <li><code>required</code> — makes a field mandatory before submission</li>
+            <li><code>disabled</code> — disables the input (user cannot interact)</li>
+            <li><code>readonly</code> — field is visible but non-editable</li>
+            <li><code>minlength</code> / <code>maxlength</code> — min/max number of characters allowed</li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">🔒</span>
+            <span>Always use <strong>POST</strong> for sensitive data (passwords, payments). GET exposes data in the URL — never use it for private info.</span>
+          </div>
+        </div>
+      </div>
+      <div class="note-section" id="note-html-blockinline">
+        <div class="note-header">
+          <div class="note-badge badge-html">&lt;/&gt;</div>
+          <div class="note-title">Block, Inline, ID &amp; Class</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Block-Level Elements <span class="tag">layout</span></div>
+          <p>A <strong style="color:var(--html)">block element</strong> occupies the <strong style="color:var(--text)">full width available</strong>, always starts on a new line, and browsers automatically add margin above and below it.</p>
+          <ul>
+            <li>Examples: <code>&lt;div&gt;</code> · <code>&lt;section&gt;</code> · <code>&lt;h1&gt;–&lt;h6&gt;</code> · <code>&lt;p&gt;</code> · <code>&lt;ul&gt;</code> · <code>&lt;table&gt;</code></li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Inline Elements <span class="tag">layout</span></div>
+          <p>An <strong style="color:var(--html)">inline element</strong> occupies only the <strong style="color:var(--text)">space it needs</strong> and does <em>not</em> start on a new line — it flows within text.</p>
+          <ul>
+            <li>Examples: <code>&lt;span&gt;</code> · <code>&lt;a&gt;</code> · <code>&lt;img&gt;</code> · <code>&lt;b&gt;</code> · <code>&lt;em&gt;</code> · <code>&lt;code&gt;</code> · <code>&lt;kbd&gt;</code></li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">📦</span>
+            <span>Think block = <strong>full row</strong> (like a paragraph), inline = <strong>in the flow</strong> (like bold text inside a sentence).</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The <code>id</code> Attribute <span class="tag">identifier</span></div>
+          <p>The <code>id</code> attribute <strong style="color:var(--text)">uniquely identifies</strong> a single HTML element on the page.</p>
+          <ul>
+            <li>Denoted with <code>#</code> in CSS — e.g. <code>#hero</code></li>
+            <li><strong>Case-sensitive</strong> — <code>#Hero</code> ≠ <code>#hero</code></li>
+            <li>One element can only have <strong>one id</strong>; one id can only belong to <strong>one element</strong></li>
+            <li>Used for CSS styling, JS targeting, and in-page anchor links (<code>&lt;a href="#section"&gt;</code>)</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The <code>class</code> Attribute <span class="tag">grouping</span></div>
+          <p>The <code>class</code> attribute <strong style="color:var(--text)">groups multiple HTML elements</strong> together so one style rule can target all of them.</p>
+          <ul>
+            <li>Denoted with <code>.</code> in CSS — e.g. <code>.card</code></li>
+            <li><strong>Case-sensitive</strong></li>
+            <li>The <strong>same class can be applied to many elements</strong></li>
+            <li>One element can have <strong>multiple classes</strong>: <code>&lt;div class="card active"&gt;</code></li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">🏷️</span>
+            <span><strong>id</strong> = unique name tag (one person, one tag). <strong>class</strong> = group label (many people, same sticker). <strong>id</strong> has higher CSS specificity than <strong>class</strong>.</span>
+          </div>
+        </div>
+      </div>
+      <div class="note-section" id="note-html-listtable">
+        <div class="note-header">
+          <div class="note-badge badge-html">&lt;/&gt;</div>
+          <div class="note-title">Lists &amp; Tables</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Types of HTML Lists <span class="tag">lists</span></div>
+          <p>HTML has 3 main list types, all using <code>&lt;li&gt;</code> to define individual items:</p>
+          <ul>
+            <li><code>&lt;ul&gt;</code> — <strong style="color:var(--html)">Unordered List</strong> — order doesn't matter; renders as bullet points<br>
+              <span style="font-size:12px;color:var(--text3)"><code>list-style-type</code>: <code>disc</code> · <code>square</code> · <code>circle</code></span>
+            </li>
+            <li><code>&lt;ol&gt;</code> — <strong style="color:var(--html)">Ordered List</strong> — items follow a specific order; renders as numbered list<br>
+              <span style="font-size:12px;color:var(--text3)"><code>type</code>: <code>1</code> · <code>A</code> · <code>a</code> · <code>I</code> (roman uppercase) · <code>i</code> (roman lowercase)</span>
+            </li>
+            <li><code>&lt;dl&gt;</code> — <strong style="color:var(--html)">Description List</strong> — container for term + description pairs</li>
+            <li><code>&lt;dt&gt;</code> — <strong>Data Term</strong> — the word or concept to describe</li>
+            <li><code>&lt;dd&gt;</code> — <strong>Data Description</strong> — the explanation of the term above it</li>
+          </ul>
+          <pre><span class="kw">&lt;ul&gt;</span>
+  <span class="kw">&lt;li&gt;</span>HTML<span class="kw">&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;</span>CSS<span class="kw">&lt;/li&gt;</span>
+<span class="kw">&lt;/ul&gt;</span>
+
+<span class="kw">&lt;dl&gt;</span>
+  <span class="kw">&lt;dt&gt;</span>HTML<span class="kw">&lt;/dt&gt;</span>
+  <span class="kw">&lt;dd&gt;</span>A markup language for web structure<span class="kw">&lt;/dd&gt;</span>
+<span class="kw">&lt;/dl&gt;</span></pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">HTML Tables <span class="tag">tables</span></div>
+          <p>Tables organize data into <strong style="color:var(--text)">rows and columns</strong> in a readable, structured format.</p>
+          <ul>
+            <li><code>&lt;table&gt;</code> — the wrapper for the entire table</li>
+            <li><code>&lt;caption&gt;</code> — defines a title or caption for the table</li>
+            <li><code>&lt;thead&gt;</code> / <code>&lt;tbody&gt;</code> / <code>&lt;tfoot&gt;</code> — group header, body, and footer rows</li>
+            <li><code>&lt;tr&gt;</code> — table row</li>
+            <li><code>&lt;th&gt;</code> — table heading cell (bold &amp; centered by default)</li>
+            <li><code>&lt;td&gt;</code> — table data cell</li>
+            <li><code>&lt;colgroup&gt;</code> — groups columns for shared styling</li>
+            <li><code>colspan</code> — merges cells <strong>horizontally</strong> (across columns)</li>
+            <li><code>rowspan</code> — merges cells <strong>vertically</strong> (across rows)</li>
+            <li><code>cellspacing</code> — space between cells</li>
+            <li><code>cellpadding</code> — space inside cells (between content and border)</li>
+          </ul>
+          <pre><span class="kw">&lt;table&gt;</span>
+  <span class="kw">&lt;caption&gt;</span>Student Marks<span class="kw">&lt;/caption&gt;</span>
+  <span class="kw">&lt;thead&gt;</span>
+    <span class="kw">&lt;tr&gt;</span>  <span class="kw">&lt;th&gt;</span>Name<span class="kw">&lt;/th&gt;</span>  <span class="kw">&lt;th&gt;</span>Score<span class="kw">&lt;/th&gt;</span>  <span class="kw">&lt;/tr&gt;</span>
+  <span class="kw">&lt;/thead&gt;</span>
+  <span class="kw">&lt;tbody&gt;</span>
+    <span class="kw">&lt;tr&gt;</span>  <span class="kw">&lt;td&gt;</span>Alice<span class="kw">&lt;/td&gt;</span>  <span class="kw">&lt;td&gt;</span>95<span class="kw">&lt;/td&gt;</span>  <span class="kw">&lt;/tr&gt;</span>
+  <span class="kw">&lt;/tbody&gt;</span>
+  <span class="kw">&lt;tfoot&gt;</span>
+    <span class="kw">&lt;tr&gt;</span>  <span class="kw">&lt;td</span> <span class="fn">colspan</span>=<span class="str">"2"</span><span class="kw">&gt;</span>Total: 95<span class="kw">&lt;/td&gt;</span>  <span class="kw">&lt;/tr&gt;</span>
+  <span class="kw">&lt;/tfoot&gt;</span>
+<span class="kw">&lt;/table&gt;</span></pre>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done with HTML?</strong> Test your knowledge!</div>
+          <button class="btn btn-primary" onclick="startQuizFor('HTML')">Take HTML Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-html-apis">
+        <div class="note-header">
+          <div class="note-badge badge-html">&lt;/&gt;</div>
+          <div class="note-title">HTML APIs</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is an API? <span class="tag">definition</span></div>
+          <p>An <strong style="color:var(--html)">API (Application Programming Interface)</strong> is like a <strong style="color:var(--text)">bridge</strong> that allows an HTML webpage to communicate with a server or access browser features.</p>
+          <ul>
+            <li>HTML doesn't have its own APIs — it works together with <strong style="color:var(--js)">JavaScript APIs</strong></li>
+            <li>APIs expose ready-made functionality so you don't have to build it from scratch</li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">🌉</span>
+            <span>Think of an API as a <strong>waiter</strong> in a restaurant — you (the webpage) tell the waiter (API) what you want, and it fetches it from the kitchen (server/browser).</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Types of HTML / JS APIs <span class="tag">reference</span></div>
+          <ul>
+            <li>
+              <strong style="color:var(--js)">① Geolocation API</strong> — gets the user's current location<br>
+              <span style="font-size:12px;color:var(--text3)">Used in: food delivery apps, e-commerce, maps</span>
+            </li>
+            <li>
+              <strong style="color:var(--js)">② Web Storage API</strong> — stores data directly in the browser<br>
+              <span style="font-size:12px;color:var(--text3)"><code>localStorage</code> → stores data <strong>permanently</strong> (survives browser close)</span><br>
+              <span style="font-size:12px;color:var(--text3)"><code>sessionStorage</code> → stores data <strong>temporarily</strong> (cleared when tab closes)</span>
+            </li>
+            <li>
+              <strong style="color:var(--js)">③ Drag &amp; Drop API</strong> — handles dragging and dropping elements<br>
+              <span style="font-size:12px;color:var(--text3)">Used in: file upload systems, kanban boards</span>
+            </li>
+            <li>
+              <strong style="color:var(--js)">④ Fetch API</strong> — retrieves data from a server asynchronously<br>
+              <span style="font-size:12px;color:var(--text3)">Replaces the older <code>XMLHttpRequest</code>; used for loading data without refreshing the page</span>
+            </li>
+            <li>
+              <strong style="color:var(--js)">⑤ Canvas API</strong> — draws graphics, charts, and animations using the <code>&lt;canvas&gt;</code> element via JavaScript
+            </li>
+            <li>
+              <strong style="color:var(--js)">⑥ DOM API</strong> — Document Object Model; access and modify HTML elements dynamically<br>
+              <span style="font-size:12px;color:var(--text3)">Used to change text, style, structure, and respond to events</span>
+            </li>
+            <li>
+              <strong style="color:var(--js)">⑦ Media API</strong> — controls <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code> elements programmatically (play, pause, volume, seek)
+            </li>
+          </ul>
+          <pre><span class="cm">// Geolocation example</span>
+<span class="fn">navigator</span>.<span class="fn">geolocation</span>.<span class="fn">getCurrentPosition</span>(<span class="fn">pos</span> => {
+  <span class="fn">console</span>.<span class="fn">log</span>(pos.<span class="fn">coords</span>.<span class="fn">latitude</span>);
+});
+
+<span class="cm">// Web Storage example</span>
+<span class="fn">localStorage</span>.<span class="fn">setItem</span>(<span class="str">'theme'</span>, <span class="str">'dark'</span>);   <span class="cm">// permanent</span>
+<span class="fn">sessionStorage</span>.<span class="fn">setItem</span>(<span class="str">'tab'</span>, <span class="str">'notes'</span>); <span class="cm">// temporary</span></pre>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Feeling confident?</strong> Test your HTML knowledge.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('HTML')">Take HTML Quiz →</button>
+        </div>
+      </div>
+      <!-- CSS NOTES -->
+      <div class="note-section" id="note-css-intro">
+        <div class="note-header">
+          <div class="note-badge badge-css">#{ }</div>
+          <div class="note-title">CSS — Introduction</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is CSS? <span class="tag">definition</span></div>
+          <p>CSS is a <strong style="color:var(--text)">stylesheet language</strong> used to control the <strong style="color:var(--text)">presentation and layout</strong> of HTML elements — colours, fonts, spacing, positioning, animations, and more.</p>
+          <ul>
+            <li>Stands for <strong style="color:var(--css)">Cascading Style Sheet</strong></li>
+            <li>Invented by <strong style="color:var(--text)">Håkon Wium Lie</strong> in <strong style="color:var(--text)">1994</strong></li>
+            <li>Separates <em>structure</em> (HTML) from <em>presentation</em> (CSS)</li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">🌊</span>
+            <span>"Cascading" means styles flow <strong>down</strong> from parent to child, and when rules conflict, specificity &amp; order decide the winner.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">CSS Syntax <span class="tag">syntax</span></div>
+          <pre><span class="fn">selector</span> {
+  <span class="kw">property</span>: <span class="str">value</span>;
+}</pre>
+          <ul>
+            <li><strong style="color:var(--text)">Selector</strong> — targets the HTML element(s) to style</li>
+            <li><strong style="color:var(--text)">Property</strong> — what you want to change (e.g. <code>color</code>, <code>font-size</code>)</li>
+            <li><strong style="color:var(--text)">Value</strong> — what to set it to (e.g. <code>red</code>, <code>16px</code>)</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">3 Ways to Apply CSS <span class="tag">methods</span></div>
+          <ul>
+            <li>
+              <strong style="color:var(--text)">① Inline CSS</strong> — style attribute directly on the element<br>
+              <code style="display:block;margin-top:4px">&lt;p style="color: red;"&gt;Hello&lt;/p&gt;</code>
+              Highest priority · best for quick one-off tweaks · not reusable
+            </li>
+            <li>
+              <strong style="color:var(--text)">② Internal CSS</strong> — <code>&lt;style&gt;</code> tag inside <code>&lt;head&gt;</code><br>
+              Good for single-page websites · better than inline · not shareable across pages
+            </li>
+            <li>
+              <strong style="color:var(--text)">③ External CSS</strong> — separate <code>.css</code> file linked with <code>&lt;link&gt;</code><br>
+              Best for large websites · clean, reusable, and maintainable · recommended approach
+            </li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">✅</span>
+            <span>Always prefer <strong>External CSS</strong> for real projects — it keeps your HTML clean and lets you style hundreds of pages from one file.</span>
+          </div>
+        </div>
+      </div>
+      <div class="note-section" id="note-css-box">
+        <div class="note-header">
+          <div class="note-badge badge-css">#{ }</div>
+          <div class="note-title">The Box Model</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is the Box Model? <span class="tag">concept</span></div>
+          <p>Every HTML element is treated as a <strong style="color:var(--text)">rectangular box</strong>. The CSS Box Model describes the layers that make up that box — from the innermost content outward.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The 4 Layers <span class="tag">structure</span></div>
+          <ul>
+            <li><strong style="color:var(--css)">Content</strong> — the actual text, image, or media inside the element</li>
+            <li><strong style="color:var(--css)">Padding</strong> — space <em>inside</em> the border, between content and border (transparent)</li>
+            <li><strong style="color:var(--css)">Border</strong> — the line that wraps around the padding and content</li>
+            <li><strong style="color:var(--css)">Margin</strong> — space <em>outside</em> the border, pushing other elements away (transparent)</li>
+          </ul>
+          <pre><span class="cm">/* From inside → out */</span>
+<span class="fn">content</span>  →  <span class="fn">padding</span>  →  <span class="fn">border</span>  →  <span class="fn">margin</span>
+
+<span class="kw">div</span> {
+  <span class="fn">width</span>:          <span class="str">200px</span>;   <span class="cm">/* content width */</span>
+  <span class="fn">height</span>:         <span class="str">100px</span>;
+  <span class="fn">padding</span>:        <span class="str">16px</span>;    <span class="cm">/* inside space */</span>
+  <span class="fn">border</span>:         <span class="str">2px solid #333</span>;
+  <span class="fn">margin</span>:         <span class="str">24px</span>;    <span class="cm">/* outside space */</span>
+  <span class="fn">border-radius</span>:  <span class="str">12px</span>;   <span class="cm">/* rounds the corners */</span>
+}</pre>
+          <div class="tip-box">
+            <span class="icon">📐</span>
+            <span>Use <code>box-sizing: border-box</code> so that padding and border are included in the element's total width/height — saves a lot of layout headaches!</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>border-radius</code> <span class="tag">styling</span></div>
+          <p>Rounds the outer corner edges of an element's border. Can be applied to all corners or individually.</p>
+          <pre><span class="fn">border-radius</span>: <span class="str">12px</span>;        <span class="cm">/* all corners */</span>
+<span class="fn">border-radius</span>: <span class="str">50%</span>;         <span class="cm">/* perfect circle */</span>
+<span class="fn">border-radius</span>: <span class="str">8px 0 8px 0</span>; <span class="cm">/* top-left, top-right, ... */</span></pre>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done reading?</strong> Test yourself on CSS.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('CSS')">Take CSS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-css-flex">
+        <div class="note-header">
+          <div class="note-badge badge-css">#{ }</div>
+          <div class="note-title">Flexbox &amp; Grid</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is Flexbox? <span class="tag">definition</span></div>
+          <p>Flexbox is a <strong style="color:var(--text)">one-dimensional</strong> layout method used to arrange elements either in a <strong style="color:var(--css)">row</strong> or a <strong style="color:var(--css)">column</strong>. It makes distributing space and aligning items inside a container simple and predictable.</p>
+          <pre><span class="fn">.container</span> {
+  <span class="kw">display</span>: <span class="str">flex</span>;  <span class="cm">/* activates flexbox */</span>
+}</pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Key Concepts <span class="tag">terminology</span></div>
+          <ul>
+            <li><strong style="color:var(--css)">Flex Container</strong> — the parent element with <code>display: flex</code> applied</li>
+            <li><strong style="color:var(--css)">Flex Items</strong> — the direct children arranged inside the container</li>
+            <li><strong style="color:var(--text)">Main Axis</strong> — the primary axis (horizontal by default)</li>
+            <li><strong style="color:var(--text)">Cross Axis</strong> — the perpendicular axis (vertical by default)</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Direction &amp; Wrapping <span class="tag">properties</span></div>
+          <ul>
+            <li><code>flex-direction</code> — controls the direction of the <strong>main axis</strong></li>
+            <li><code>row</code> (default) · <code>row-reverse</code> · <code>column</code> · <code>column-reverse</code></li>
+            <li><code>flex-wrap</code> — allows items to break into multiple lines (top to bottom)</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Alignment Properties <span class="tag">alignment</span></div>
+          <ul>
+            <li><code>justify-content</code> — aligns items along the <strong style="color:var(--text)">main axis</strong> (horizontal by default)</li>
+            <li style="padding-left:1.5rem;font-size:12px;color:var(--text3)"><code>flex-start</code> · <code>flex-end</code> · <code>center</code> · <code>space-between</code> · <code>space-around</code> · <code>space-evenly</code></li>
+            <li><code>align-items</code> — aligns items along the <strong style="color:var(--text)">cross axis</strong> (vertical by default)</li>
+            <li style="padding-left:1.5rem;font-size:12px;color:var(--text3)"><code>stretch</code> (default) · <code>flex-start</code> · <code>flex-end</code> · <code>center</code> · <code>baseline</code></li>
+            <li><code>align-content</code> — aligns multiple lines of items along the cross axis (when wrapping)</li>
+            <li><code>align-self</code> — overrides <code>align-items</code> for a <strong style="color:var(--text)">single</strong> flex item individually</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Grow, Shrink &amp; Basis <span class="tag">sizing</span></div>
+          <ul>
+            <li><code>flex-grow</code> — ability to <strong style="color:var(--text)">grow</strong> if extra space is available (default: 0)</li>
+            <li><code>flex-shrink</code> — ability to <strong style="color:var(--text)">shrink</strong> if the container is too small (default: 1)</li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span><code>align-self</code> always <strong>overrides</strong> <code>align-items</code> — use it when one item needs special treatment inside the group.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is CSS Grid? <span class="tag">definition</span></div>
+          <p>CSS Grid is a <strong style="color:var(--text)">two-dimensional</strong> layout method — it arranges elements in <strong style="color:var(--css)">rows and columns at the same time</strong>. Flexbox handles one direction at a time; Grid gives you both at once.</p>
+          <pre><span class="fn">.container</span> {
+  <span class="kw">display</span>: <span class="str">grid</span>;
+  <span class="fn">grid-template-columns</span>: <span class="str">1fr 1fr 1fr</span>;  <span class="cm">/* 3 equal columns */</span>
+  <span class="fn">grid-template-rows</span>:    <span class="str">auto</span>;
+  <span class="fn">gap</span>:                   <span class="str">1rem</span>;         <span class="cm">/* space between cells */</span>
+}</pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Grid Terminology <span class="tag">terminology</span></div>
+          <ul>
+            <li><strong style="color:var(--css)">Grid Container</strong> — the parent element with <code>display: grid</code> applied</li>
+            <li><strong style="color:var(--css)">Grid Items</strong> — the direct children placed inside it</li>
+            <li><strong style="color:var(--text)">Grid Lines</strong> — the dividing lines that form the grid</li>
+            <li><strong style="color:var(--text)">Grid Tracks</strong> — the rows and columns between those lines</li>
+            <li><strong style="color:var(--text)">Grid Cell</strong> — a single space between two adjacent lines</li>
+            <li><strong style="color:var(--text)">Grid Area</strong> — one or more grid cells grouped together</li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">🧭</span>
+            <span><strong>Flexbox vs Grid:</strong> reach for Flexbox on single-direction layouts (nav bars, button groups), and Grid when you need both rows and columns controlled together (page layouts, card grids).</span>
+          </div>
+        </div>
+      </div>
+      <div class="note-section" id="note-css-selector">
+        <div class="note-header">
+          <div class="note-badge badge-css">#{ }</div>
+          <div class="note-title">Selectors &amp; Specificity</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is CSS Specificity? <span class="tag">concept</span></div>
+          <p>Specificity is the <strong style="color:var(--text)">rule that decides which CSS style will be applied</strong> when multiple styles target the same element. The more specific a selector, the higher its priority — it wins over less specific ones.</p>
+          <div class="tip-box">
+            <span class="icon">🏆</span>
+            <span>Priority order: <strong>Inline styles</strong> &gt; <strong>#id</strong> &gt; <strong>.class</strong> &gt; <strong>element</strong> &gt; <strong>* universal</strong></span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What are CSS Selectors? <span class="tag">definition</span></div>
+          <p>Selectors are <strong style="color:var(--text)">patterns used to target and style specific HTML elements</strong> on a web page. There are 5 main types:</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The 5 Types of Selector <span class="tag">reference</span></div>
+          <ul>
+            <li><code>*</code> &nbsp;<strong style="color:var(--text)">Universal</strong> — targets every element in the document; lowest specificity</li>
+            <li><code>#id</code> &nbsp;<strong style="color:var(--text)">ID Selector</strong> — targets one uniquely identified element; highest specificity among selectors</li>
+            <li><code>.class</code> &nbsp;<strong style="color:var(--text)">Class Selector</strong> — targets all elements sharing that class; can be applied to multiple elements</li>
+            <li><code>element</code> &nbsp;<strong style="color:var(--text)">Element Selector</strong> — targets all elements of a specific tag name (e.g. <code>p</code>, <code>h1</code>)</li>
+            <li><code>a, b, c</code> &nbsp;<strong style="color:var(--text)">Group Selector</strong> — targets multiple elements, separated by commas, written on one line</li>
+          </ul>
+          <pre><span class="cm">/* Universal */</span>      <span class="kw">*</span> { <span class="fn">margin</span>: <span class="str">0</span>; }
+<span class="cm">/* Element   */</span>      <span class="kw">p</span> { <span class="fn">color</span>: <span class="str">gray</span>; }
+<span class="cm">/* Class     */</span>      <span class="fn">.card</span> { <span class="fn">border</span>: <span class="str">1px solid</span>; }
+<span class="cm">/* ID        */</span>      <span class="fn">#hero</span> { <span class="fn">background</span>: <span class="str">navy</span>; }
+<span class="cm">/* Group     */</span>      <span class="kw">h1</span>, <span class="kw">h2</span>, <span class="kw">h3</span> { <span class="fn">font-weight</span>: <span class="str">700</span>; }</pre>
+        </div>
+      </div>
+      <!-- NEW CSS SECTIONS -->
+      <div class="note-section" id="note-css-units">
+        <div class="note-header">
+          <div class="note-badge badge-css">#{ }</div>
+          <div class="note-title">Units, Display &amp; Position</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">CSS Units <span class="tag">measurement</span></div>
+          <p>CSS uses units to measure the size and length of elements. There are two categories:</p>
+          <ul>
+            <li><strong style="color:var(--css)">Absolute</strong> — fixed &amp; independent of anything else: <code>px</code> · <code>cm</code> · <code>mm</code> · <code>in</code></li>
+            <li><strong style="color:var(--css)">Relative</strong> — depend on parent element or viewport: <code>%</code> · <code>em</code> · <code>rem</code> · <code>vw</code> · <code>vh</code> · <code>vmax</code> · <code>vmin</code></li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">📐</span>
+            <span>Prefer <strong><code>rem</code></strong> for font sizes (relative to the root <code>&lt;html&gt;</code> font size) and <strong><code>%</code> / <code>vw</code> / <code>vh</code></strong> for responsive layouts.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The <code>display</code> Property <span class="tag">layout</span></div>
+          <p>Controls how an element is rendered in the document flow:</p>
+          <ul>
+            <li><code>block</code> — starts on a <strong style="color:var(--text)">new line</strong> and takes up the <strong style="color:var(--text)">full width</strong> available (e.g. <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>)</li>
+            <li><code>inline</code> — does <strong style="color:var(--text)">not</strong> start on a new line; only takes the space it needs (e.g. <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>)</li>
+            <li><code>inline-block</code> — inline flow but you can set width/height like a block element</li>
+            <li><code>none</code> — element is <strong style="color:var(--text)">completely hidden</strong>; removed from document flow, takes no space</li>
+          </ul>
+          <pre><span class="fn">visibility</span>: <span class="str">hidden</span>;  <span class="cm">/* hides element BUT still occupies space */</span>
+<span class="fn">display</span>:    <span class="str">none</span>;    <span class="cm">/* hides element AND removes its space */</span></pre>
+          <div class="tip-box">
+            <span class="icon">👁️</span>
+            <span><code>visibility: hidden</code> ≠ <code>display: none</code>. Hidden still reserves space in the layout; none removes the element entirely from the flow.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The <code>position</code> Property <span class="tag">concept</span></div>
+          <p>Specifies <strong style="color:var(--text)">how an element is positioned</strong> in the document. The <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code> properties then fine-tune where it lands.</p>
+          <ul>
+            <li><code>static</code> — default; positioned in normal document flow; <code>top/left/etc.</code> have no effect</li>
+            <li><code>relative</code> — moves <strong style="color:var(--text)">relative to its own original position</strong>; still occupies original space</li>
+            <li><code>absolute</code> — positioned relative to the <strong style="color:var(--text)">nearest positioned ancestor</strong>; removed from document flow</li>
+            <li><code>fixed</code> — positioned relative to the <strong style="color:var(--text)">browser viewport</strong>; stays put on scroll; removed from flow</li>
+            <li><code>sticky</code> — acts like <code>relative</code> until a scroll threshold, then <strong style="color:var(--text)">locks like <code>fixed</code></strong></li>
+          </ul>
+          <pre><span class="fn">.navbar</span> { <span class="kw">position</span>: <span class="str">sticky</span>; <span class="fn">top</span>: <span class="str">0</span>; }   <span class="cm">/* stays at top on scroll */</span>
+<span class="fn">.modal</span>  { <span class="kw">position</span>: <span class="str">fixed</span>;  <span class="fn">top</span>: <span class="str">50%</span>; }  <span class="cm">/* always centred in viewport */</span></pre>
+          <div class="tip-box">
+            <span class="icon">🗂️</span>
+            <span><code>z-index</code> controls which element appears <strong>on top</strong> when they overlap. Works on all positions except <code>static</code>. Higher number = closer to viewer.</span>
+          </div>
+        </div>
+      </div>
+      <div class="note-section" id="note-css-animation">
+        <div class="note-header">
+          <div class="note-badge badge-css">#{ }</div>
+          <div class="note-title">Pseudo-class, Transition &amp; Animation</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Pseudo-classes <span class="tag">state styling</span></div>
+          <p>A pseudo-class lets you style an element based on its <strong style="color:var(--text)">current state</strong>, without needing extra classes or JavaScript. You just tack it onto a selector with a colon.</p>
+          <pre><span class="fn">a</span><span class="kw">:hover</span>  { <span class="fn">color</span>: <span class="str">burlywood</span>; }   <span class="cm">/* mouse is over it */</span>
+<span class="fn">a</span><span class="kw">:active</span> { <span class="fn">color</span>: <span class="str">beige</span>; }       <span class="cm">/* being clicked right now */</span>
+<span class="fn">a</span><span class="kw">:visited</span>{ <span class="fn">color</span>: <span class="str">purple</span>; }      <span class="cm">/* link was clicked before */</span>
+<span class="fn">input</span><span class="kw">:focus</span> { <span class="fn">outline</span>: <span class="str">2px solid blue</span>; } <span class="cm">/* field is selected */</span></pre>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span>These are the ones you'll use constantly: <code>:hover</code> for buttons/links, <code>:focus</code> for form fields, and <code>:active</code> for that "pressed down" feel.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Transition <span class="tag">smooth change</span></div>
+          <p>A transition tells the browser: when a property changes, don't just jump to the new value — animate smoothly toward it instead.</p>
+          <pre><span class="fn">.btn</span> {
+  <span class="kw">transition</span>: <span class="str">background 0.3s ease</span>;  <span class="cm">/* property, duration, easing */</span>
+}
+<span class="fn">.btn</span><span class="kw">:hover</span> { <span class="fn">background</span>: <span class="str">purple</span>; } <span class="cm">/* now this change fades in over 0.3s */</span></pre>
+          <p>Pair a transition with a pseudo-class like <code>:hover</code> and you get an animated effect with almost no extra code — that's most of what you see on buttons and cards across the web.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Transform <span class="tag">visual change</span></div>
+          <p>Transform moves, resizes, rotates, or tilts an element visually — without pushing surrounding elements around, since it doesn't affect layout.</p>
+          <ul>
+            <li><code>translate(x, y)</code> — shift it from its original spot</li>
+            <li><code>rotate(20deg)</code> — spin it (negative values go the other way)</li>
+            <li><code>scale(1.5)</code> — resize it (1 = same size, 1.5 = 50% bigger)</li>
+            <li><code>skew(10deg, 30deg)</code> — slant its edges</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Animation &amp; Keyframes <span class="tag">keyframes</span></div>
+          <p>Transitions only handle two states (before → after). When you need something more elaborate — multiple steps, or something that loops forever — that's what <code>@keyframes</code> animations are for.</p>
+          <pre><span class="kw">@keyframes</span> <span class="fn">fadeIn</span> {
+  <span class="str">from</span> { <span class="fn">opacity</span>: <span class="str">0</span>; }
+  <span class="str">to</span>   { <span class="fn">opacity</span>: <span class="str">1</span>; }
+}
+
+<span class="fn">.box</span> {
+  <span class="fn">animation</span>: <span class="str">fadeIn 1s ease 0.2s infinite alternate</span>;
+  <span class="cm">/* name, duration, easing, delay, repeat count, direction */</span>
+}</pre>
+          <div class="tip-box">
+            <span class="icon">🎬</span>
+            <span>Use <code>from / to</code> for a simple two-step animation, or percentage steps like <code>0% { } 50% { } 100% { }</code> when you need more stages in between.</span>
+          </div>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done with CSS?</strong> Test yourself!</div>
+          <button class="btn btn-primary" onclick="startQuizFor('CSS')">Take CSS Quiz →</button>
+        </div>
+      </div>
+      <!-- JAVASCRIPT NOTES -->
+      <div class="note-section" id="note-js-intro">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">JavaScript — Introduction</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is JavaScript? <span class="tag">definition</span></div>
+          <p>JavaScript (JS) is a <strong style="color:var(--text)">high-level, interpreted programming language</strong> used to make web pages interactive and dynamic.</p>
+          <ul>
+            <li><strong style="color:var(--html)">HTML</strong> → gives a page its structure</li>
+            <li><strong style="color:var(--css)">CSS</strong> → gives a page its presentation</li>
+            <li><strong style="color:var(--js)">JavaScript</strong> → gives a page its behaviour &amp; functionality</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">History of JavaScript <span class="tag">timeline</span></div>
+          <ul>
+            <li><code>1995</code> — invented by <strong style="color:var(--text)">Brendan Eich</strong> at Netscape</li>
+            <li>Original name: <strong style="color:var(--text)">Mocha</strong></li>
+            <li>Later renamed to <strong style="color:var(--text)">LiveScript</strong></li>
+            <li>Finally renamed to <strong style="color:var(--js)">JavaScript</strong></li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span>Despite the name, JavaScript has almost nothing to do with Java — the name was a marketing move to ride on Java's popularity in the '90s.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Current Version <span class="tag">spec</span></div>
+          <p>The current version is <strong style="color:var(--text)">ECMAScript 2026 (ES2026)</strong>, the 17th edition of the ECMAScript specification, officially ratified by ECMA International on <strong style="color:var(--text)">June 30, 2026</strong>.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is JavaScript Used For? <span class="tag">uses</span></div>
+          <ul>
+            <li>DOM manipulation</li>
+            <li>Event handling</li>
+            <li>Form validation</li>
+            <li>Animation</li>
+            <li>API calls</li>
+            <li>Asynchronous programming</li>
+            <li>Web applications</li>
+            <li>Backend development</li>
+          </ul>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done reading?</strong> Test yourself on JavaScript.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-js-variables">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">Variables &amp; Data Types</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is a Variable? <span class="tag">definition</span></div>
+          <p>A variable is a <strong style="color:var(--text)">container</strong> — or a <strong style="color:var(--text)">named reference</strong> — used to store a data value so it can be reused or updated later.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">3 Ways to Declare a Variable <span class="tag">const · let · var</span></div>
+          <ul>
+            <li><strong style="color:var(--js)">① const</strong> — value <strong style="color:var(--text)">cannot be reassigned or redeclared</strong> within the same scope · block scope <code>{ }</code></li>
+            <li><strong style="color:var(--js)">② let</strong> — value <strong style="color:var(--text)">can be reassigned</strong> but not redeclared within the same scope · block scope <code>{ }</code></li>
+            <li><strong style="color:var(--js)">③ var</strong> — value <strong style="color:var(--text)">can be redeclared &amp; reassigned</strong> within the same scope · function scope</li>
+          </ul>
+          <pre><span class="kw">const</span> name = <span class="str">"Archana"</span>;   <span class="cm">// can't be reassigned</span>
+<span class="kw">let</span> age = <span class="str">21</span>;
+age = <span class="str">22</span>;              <span class="cm">// reassigning is fine</span>
+<span class="kw">var</span> x = <span class="str">1</span>;
+<span class="kw">var</span> x = <span class="str">2</span>;          <span class="cm">// var allows redeclaration too</span></pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Which One Should You Use? <span class="tag">best practice</span></div>
+          <p><code>let</code> and <code>const</code> are generally preferred over <code>var</code> in modern JavaScript because they provide block scope and help prevent unexpected behaviour.</p>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span>Always declare a variable with <code>const</code> when you know the value shouldn't change. Reach for <code>let</code> only when you know it will be reassigned later.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">8 Data Types in JavaScript <span class="tag">overview</span></div>
+          <p>JavaScript has 8 basic data types — <strong style="color:var(--text)">7 primitive</strong> and <strong style="color:var(--text)">1 non-primitive</strong> (reference) type.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Primitive Data Types <span class="tag">7 types</span></div>
+          <ul>
+            <li><strong style="color:var(--js)">number</strong> — represents both integer &amp; floating-point values</li>
+            <li><strong style="color:var(--js)">bigInt</strong> — used for integers of arbitrary size</li>
+            <li><strong style="color:var(--js)">string</strong> — text enclosed in <code>'single'</code>, <code>"double"</code> or <code>`back ticks`</code></li>
+            <li><strong style="color:var(--js)">boolean</strong> — logical values: <code>true</code> / <code>false</code></li>
+            <li><strong style="color:var(--js)">undefined</strong> — a variable with no assigned value</li>
+            <li><strong style="color:var(--js)">null</strong> — represents an intentional absence of a value</li>
+            <li><strong style="color:var(--js)">symbol</strong> — a unique, immutable identifier</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Non-Primitive (Reference) Type <span class="tag">object · array · function</span></div>
+          <p>An <strong style="color:var(--text)">object</strong> is a collection of data stored as key-value pairs. Arrays and functions are both special kinds of objects.</p>
+          <pre><span class="kw">let</span> person = {
+  name: <span class="str">"Sikun"</span>,
+  age: <span class="str">19</span>
+};
+<span class="fn">console</span>.<span class="fn">log</span>(person.age); <span class="cm">// 19</span></pre>
+          <pre><span class="kw">let</span> colors = [<span class="str">"Red"</span>, <span class="str">"Green"</span>, <span class="str">"Blue"</span>];
+<span class="fn">console</span>.<span class="fn">log</span>(colors[<span class="str">1</span>]); <span class="cm">// Green</span></pre>
+          <pre><span class="kw">function</span> <span class="fn">greet</span>() {
+  <span class="kw">return</span> <span class="str">"Hello!"</span>;
+}
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="fn">greet</span>()); <span class="cm">// Hello!</span></pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Stack vs Heap Memory <span class="tag">memory</span></div>
+          <p>JavaScript uses two types of memory to store values:</p>
+          <ul>
+            <li><strong style="color:var(--text)">Stack</strong> — used for primitive data types; gives a <strong style="color:var(--text)">copy</strong> of the value</li>
+            <li><strong style="color:var(--text)">Heap</strong> — used for non-primitive data types; stores a <strong style="color:var(--text)">reference</strong>, so changes affect the original value</li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">🧠</span>
+            <span>This is why copying an object with <code>=</code> doesn't create an independent copy — both variables still point to the same thing in the heap.</span>
+          </div>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Ready?</strong> Test yourself on JavaScript.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-js-strings">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">Strings</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is a String? <span class="tag">definition</span></div>
+          <p>A string is a sequence of characters used to represent text in JS. Strings are <strong style="color:var(--text)">immutable</strong> — the original string can't be changed directly, only replaced.</p>
+          <p>JS supports 3 ways to create one:</p>
+          <pre><span class="kw">let</span> a = <span class="str">'single quotes'</span>;
+<span class="kw">let</span> b = <span class="str">"double quotes"</span>;
+<span class="kw">let</span> c = <span class="str">`back ticks`</span>;   <span class="cm">// template literal — supports interpolation</span>
+
+<span class="kw">let</span> name = <span class="str">"Archana"</span>;
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">`Hello ${name}`</span>); <span class="cm">// Hello Archana</span></pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Common String Methods <span class="tag">reference</span></div>
+          <p>String methods don't change the original string — they always return a new one.</p>
+          <ul>
+            <li><code>.length</code> — returns the string's length (a property, not a method)</li>
+            <li><code>toUpperCase()</code> / <code>toLowerCase()</code> — converts case</li>
+            <li><code>charAt(3)</code> — returns the character at a specified index</li>
+            <li><code>indexOf('i')</code> — returns the index position of a specified character</li>
+            <li><code>substring(0, 3)</code> — extracts characters between two indexes; treats negative values as <code>0</code></li>
+            <li><code>slice(-1, 9)</code> — extracts part of a string; supports negative indexes, more flexible than <code>substring()</code></li>
+            <li><code>trim()</code> — removes whitespace from both ends of the string</li>
+            <li><code>includes()</code> — checks whether a substring is present, returns a boolean</li>
+            <li><code>replace()</code> — replaces a value/pattern in a string, returns a new string</li>
+            <li><code>split()</code> — converts a string into an array using a separator like <code>" "</code> or <code>","</code></li>
+          </ul>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span><code>substring()</code> and <code>slice()</code> look similar, but <code>slice()</code> is the more flexible one — it accepts negative indexes to count from the end.</span>
+          </div>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done reading?</strong> Test yourself on JavaScript.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-js-numbers">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">Numbers, Math &amp; Dates</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Number Methods <span class="tag">reference</span></div>
+          <p><code>number</code> is the primitive data type used to represent both integer and floating-point values.</p>
+          <ul>
+            <li><code>toString()</code> — converts a number into a string</li>
+            <li><code>toFixed()</code> — formats a number to a specified number of decimal places</li>
+            <li><code>toPrecision()</code> — formats a number to a specified length of significant digits</li>
+            <li><code>toLocaleString()</code> — converts a number into local currency-style formatting with commas</li>
+          </ul>
+          <pre><span class="kw">const</span> some = <span class="kw">new</span> <span class="fn">Number</span>(<span class="str">301.31</span>);
+<span class="fn">console</span>.<span class="fn">log</span>(some.<span class="fn">toPrecision</span>(<span class="str">6</span>)); <span class="cm">// 301.310</span></pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The Math Object <span class="tag">reference</span></div>
+          <p><code>Math</code> is a built-in global object used to perform mathematical operations on numbers.</p>
+          <ul>
+            <li><code>Math.PI</code> — returns π as <code>3.14…</code></li>
+            <li><code>Math.abs()</code> — returns the positive value of a number</li>
+            <li><code>Math.round()</code> — rounds to the nearest integer</li>
+            <li><code>Math.ceil()</code> — rounds up (<code>2.93</code> → <code>3</code>)</li>
+            <li><code>Math.floor()</code> — rounds down (<code>2.93</code> → <code>2</code>)</li>
+            <li><code>Math.trunc()</code> — removes the decimal part of a number</li>
+            <li><code>Math.random()</code> — generates a random number between 0 and 1</li>
+            <li><code>Math.min()</code> / <code>Math.max()</code> — returns the smallest / largest value</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The Date Object <span class="tag">reference</span></div>
+          <p>The <code>Date</code> object is used to create, display, and manipulate dates and times.</p>
+          <ul>
+            <li><code>toString()</code> — returns the date as a readable string (in India Standard Time)</li>
+            <li><code>toDateString()</code> — returns only the date, as a string</li>
+            <li><code>toLocaleString()</code> — formats both date &amp; time according to the user's locale</li>
+            <li><code>toLocaleDateString()</code> / <code>toLocaleTimeString()</code> — returns only the date / only the time, locale-formatted</li>
+          </ul>
+          <pre><span class="kw">let</span> date = <span class="kw">new</span> <span class="fn">Date</span>(<span class="str">2007</span>, <span class="str">0</span>, <span class="str">31</span>);
+<span class="fn">console</span>.<span class="fn">log</span>(date.<span class="fn">toDateString</span>()); <span class="cm">// Wed Jan 31 2007</span></pre>
+          <p>A <strong style="color:var(--text)">timestamp</strong> represents the number of milliseconds since January 1, 1970, 00:00:00 UTC — this starting point is called the <strong style="color:var(--text)">Unix epoch</strong>.</p>
+          <ul>
+            <li><code>getTime()</code> — returns a timestamp in milliseconds since the Unix epoch</li>
+            <li><code>Date.now()</code> — returns the current timestamp</li>
+          </ul>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done with this section?</strong> Test yourself!</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-js-arrays">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">Arrays</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is an Array? <span class="tag">definition</span></div>
+          <p>An array is a collection of multiple values — of any datatype — stored in a single variable, ordered by index starting at <code>0</code>.</p>
+          <pre><span class="kw">let</span> colors = [<span class="str">"Red"</span>, <span class="str">"Green"</span>, <span class="str">"Blue"</span>];
+<span class="fn">console</span>.<span class="fn">log</span>(colors[<span class="str">0</span>]); <span class="cm">// Red</span>
+<span class="fn">console</span>.<span class="fn">log</span>(colors.<span class="fn">length</span>); <span class="cm">// 3</span></pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Common Array Methods <span class="tag">reference</span></div>
+          <ul>
+            <li><code>push()</code> / <code>pop()</code> — add / remove from the <strong style="color:var(--text)">end</strong></li>
+            <li><code>unshift()</code> / <code>shift()</code> — add / remove from the <strong style="color:var(--text)">start</strong></li>
+            <li><code>indexOf()</code> / <code>includes()</code> — find or check for a value</li>
+            <li><code>slice()</code> — returns a portion of the array without changing the original</li>
+            <li><code>splice()</code> — adds/removes elements, changing the original array</li>
+            <li><code>join()</code> — combines all elements into a string</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Iteration Methods <span class="tag">forEach · map · filter · reduce</span></div>
+          <ul>
+            <li><code>forEach()</code> — runs a function on every element, returns nothing</li>
+            <li><code>map()</code> — returns a <strong style="color:var(--text)">new array</strong> with each element transformed</li>
+            <li><code>filter()</code> — returns a new array with only elements that pass a test</li>
+            <li><code>reduce()</code> — reduces the array down to a single value</li>
+          </ul>
+          <pre><span class="kw">const</span> nums = [<span class="str">1</span>, <span class="str">2</span>, <span class="str">3</span>, <span class="str">4</span>];
+<span class="kw">const</span> doubled = nums.<span class="fn">map</span>(n => n * <span class="str">2</span>);   <span class="cm">// [2, 4, 6, 8]</span>
+<span class="kw">const</span> evens   = nums.<span class="fn">filter</span>(n => n % <span class="str">2</span> === <span class="str">0</span>); <span class="cm">// [2, 4]</span>
+<span class="kw">const</span> total   = nums.<span class="fn">reduce</span>((sum, n) => sum + n, <span class="str">0</span>); <span class="cm">// 10</span></pre>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span><code>map()</code> and <code>filter()</code> always return a <strong>new</strong> array — they never modify the original one.</span>
+          </div>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done with JS fundamentals?</strong> Test yourself!</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-js-dom">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">DOM Manipulation</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is the DOM? <span class="tag">definition</span></div>
+          <p>The <strong style="color:var(--text)">DOM (Document Object Model)</strong> is the browser's live, tree-shaped representation of an HTML page. JavaScript uses it to read and change what's on screen without reloading the page.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Selecting Elements <span class="tag">reference</span></div>
+          <ul>
+            <li><code>getElementById('id')</code> — selects one element by its unique ID</li>
+            <li><code>querySelector('.class')</code> — selects the <strong style="color:var(--text)">first</strong> match for any CSS selector</li>
+            <li><code>querySelectorAll('.class')</code> — selects <strong style="color:var(--text)">all</strong> matches as a NodeList</li>
+          </ul>
+          <pre><span class="kw">const</span> title = <span class="fn">document</span>.<span class="fn">querySelector</span>(<span class="str">'.hero-title'</span>);
+<span class="fn">console</span>.<span class="fn">log</span>(title.<span class="fn">textContent</span>);</pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Changing Content &amp; Styles <span class="tag">reference</span></div>
+          <ul>
+            <li><code>textContent</code> — reads/sets plain text inside an element</li>
+            <li><code>innerHTML</code> — reads/sets HTML markup inside an element</li>
+            <li><code>style.property</code> — sets one inline CSS property</li>
+            <li><code>classList.add() / .remove() / .toggle()</code> — manages CSS classes</li>
+          </ul>
+          <pre><span class="fn">el</span>.<span class="fn">textContent</span> = <span class="str">'Updated!'</span>;
+<span class="fn">el</span>.<span class="fn">style</span>.<span class="fn">color</span> = <span class="str">'red'</span>;
+<span class="fn">el</span>.<span class="fn">classList</span>.<span class="fn">toggle</span>(<span class="str">'active'</span>);</pre>
+          <div class="tip-box">
+            <span class="icon">⚠️</span>
+            <span>Prefer <code>textContent</code> over <code>innerHTML</code> when inserting user-provided text — <code>innerHTML</code> parses its input as real HTML, which can be a security risk.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Creating &amp; Removing Elements <span class="tag">reference</span></div>
+          <ul>
+            <li><code>document.createElement('div')</code> — creates a new element (not yet on the page)</li>
+            <li><code>parent.appendChild(el)</code> — adds it inside a parent element</li>
+            <li><code>el.remove()</code> — removes the element from the page</li>
+          </ul>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done reading?</strong> Test yourself on JavaScript.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-js-events">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">Events</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is an Event? <span class="tag">definition</span></div>
+          <p>An event is an action the browser can detect — a click, a keypress, a page load — that JavaScript can <strong style="color:var(--text)">listen for</strong> and react to.</p>
+          <pre><span class="fn">button</span>.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, () => {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">'Clicked!'</span>);
+});</pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Common Event Types <span class="tag">reference</span></div>
+          <ul>
+            <li><code>click</code> — mouse click</li>
+            <li><code>keydown</code> / <code>keyup</code> — a key is pressed / released</li>
+            <li><code>submit</code> — a form is submitted</li>
+            <li><code>input</code> / <code>change</code> — a field's value changes</li>
+            <li><code>load</code> — a page or resource finishes loading</li>
+            <li><code>mouseover</code> / <code>mouseout</code> — pointer enters / leaves an element</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The Event Object <span class="tag">reference</span></div>
+          <p>The listener's callback automatically receives an <strong style="color:var(--text)">event object</strong> with details about what happened.</p>
+          <ul>
+            <li><code>event.target</code> — the exact element the event happened on</li>
+            <li><code>event.preventDefault()</code> — stops the browser's default action (e.g. a form actually submitting)</li>
+            <li><code>event.stopPropagation()</code> — stops the event from bubbling up further</li>
+          </ul>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Event Bubbling <span class="tag">concept</span></div>
+          <p>When an event fires on an element, it doesn't stop there — it <strong style="color:var(--text)">bubbles up</strong> through every ancestor element in the DOM tree, triggering their listeners too.</p>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span>This is how <strong>event delegation</strong> works — you can attach one listener to a parent instead of one per child, and use <code>event.target</code> to know which child was actually clicked.</span>
+          </div>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Ready?</strong> Test yourself on JavaScript.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-js-async">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">Async &amp; Promises</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Synchronous vs Asynchronous <span class="tag">concept</span></div>
+          <p>JavaScript normally runs <strong style="color:var(--text)">synchronously</strong> — one line at a time, in order. Asynchronous code lets a slow task (like a network request) run in the background <strong style="color:var(--text)">without blocking</strong> the rest of the program.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is a Promise? <span class="tag">definition</span></div>
+          <p>A Promise is an object representing a value that <strong style="color:var(--text)">isn't ready yet</strong>, but will be at some point — either successfully (<code>resolved</code>) or not (<code>rejected</code>).</p>
+          <ul>
+            <li><code>pending</code> — still waiting for the result</li>
+            <li><code>fulfilled</code> — completed successfully</li>
+            <li><code>rejected</code> — failed with an error</li>
+          </ul>
+          <pre><span class="fn">fetchData</span>()
+  .<span class="fn">then</span>(result => <span class="fn">console</span>.<span class="fn">log</span>(result))
+  .<span class="fn">catch</span>(err => <span class="fn">console</span>.<span class="fn">error</span>(err));</pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title"><code>async</code> / <code>await</code> <span class="tag">syntax</span></div>
+          <p><code>async/await</code> is syntactic sugar over Promises — it lets asynchronous code read like ordinary, step-by-step code.</p>
+          <pre><span class="kw">async</span> <span class="kw">function</span> <span class="fn">loadUser</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res  = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'/api/user'</span>);
+    <span class="kw">const</span> data = <span class="kw">await</span> res.<span class="fn">json</span>();
+    <span class="fn">console</span>.<span class="fn">log</span>(data);
+  } <span class="kw">catch</span> (err) {
+    <span class="fn">console</span>.<span class="fn">error</span>(<span class="str">'Failed:'</span>, err);
+  }
+}</pre>
+          <div class="tip-box">
+            <span class="icon">💡</span>
+            <span><code>await</code> can only be used inside an <code>async</code> function — it pauses that function until the Promise settles, without freezing the rest of the page.</span>
+          </div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">The Fetch API <span class="tag">example</span></div>
+          <p><code>fetch()</code> is the modern way to request data from a server — it returns a Promise.</p>
+          <pre><span class="fn">fetch</span>(<span class="str">'https://api.example.com/data'</span>)
+  .<span class="fn">then</span>(res => res.<span class="fn">json</span>())
+  .<span class="fn">then</span>(data => <span class="fn">console</span>.<span class="fn">log</span>(data));</pre>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Feeling confident?</strong> Test your JavaScript knowledge.</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+      <div class="note-section" id="note-js-es6">
+        <div class="note-header">
+          <div class="note-badge badge-js">JS</div>
+          <div class="note-title">ES6+ Features</div>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">What is ES6? <span class="tag">definition</span></div>
+          <p><strong style="color:var(--text)">ES6 (ECMAScript 2015)</strong> was a major update to JavaScript that introduced most of the syntax used in modern code. "ES6+" refers to ES6 and every yearly edition released since.</p>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Arrow Functions <span class="tag">syntax</span></div>
+          <p>A shorter function syntax that also inherits <code>this</code> from its surrounding scope instead of having its own.</p>
+          <pre><span class="cm">// old way</span>
+<span class="kw">function</span> <span class="fn">add</span>(a, b) { <span class="kw">return</span> a + b; }
+
+<span class="cm">// arrow function</span>
+<span class="kw">const</span> add = (a, b) => a + b;</pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Destructuring &amp; Spread <span class="tag">syntax</span></div>
+          <ul>
+            <li><strong style="color:var(--text)">Destructuring</strong> — unpacks values from an object or array into variables</li>
+            <li><strong style="color:var(--text)">Spread (<code>...</code>)</strong> — expands an array/object into individual elements</li>
+            <li><strong style="color:var(--text)">Rest (<code>...</code>)</strong> — the opposite: gathers remaining items into one array</li>
+          </ul>
+          <pre><span class="kw">const</span> { name, age } = person;         <span class="cm">// destructuring</span>
+<span class="kw">const</span> combined = [...arr1, ...arr2];  <span class="cm">// spread</span>
+<span class="kw">function</span> <span class="fn">sum</span>(...nums) { <span class="kw">return</span> nums.<span class="fn">reduce</span>((a,b) => a+b); } <span class="cm">// rest</span></pre>
+        </div>
+        <div class="note-card">
+          <div class="note-card-title">Template Literals &amp; Modules <span class="tag">syntax</span></div>
+          <ul>
+            <li><strong style="color:var(--text)">Template literals</strong> — back-tick strings with <code>${ variable }</code> interpolation</li>
+            <li><code>import</code> / <code>export</code> — share code between files as ES modules</li>
+            <li><strong style="color:var(--text)">Default parameters</strong> — <code>function greet(name = 'Guest') { ... }</code></li>
+          </ul>
+        </div>
+        <div class="quiz-cta">
+          <div class="quiz-cta-text"><strong>Done with JavaScript?</strong> Test yourself!</div>
+          <button class="btn btn-primary" onclick="startQuizFor('JavaScript')">Take JS Quiz →</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</section>
+<!-- ===== QUIZ ===== -->
+<section id="quiz" class="page">
+  <div class="page-fx" aria-hidden="true"><div class="fx-grid"></div><div class="fx-blob b1"></div><div class="fx-blob b2"></div><div class="fx-blob b3"></div><div class="fx-spot"></div></div>
+  <div class="quiz-wrapper">
+    <!-- Picker -->
+    <div id="quiz-picker">
+      <div class="picker-title">Choose Your Quiz</div>
+      <p class="picker-sub">Select a topic to begin.</p>
+      <div class="picker-grid">
+        <div class="picker-card" id="pick-HTML" onclick="selectTopic('HTML')">
+          <div class="picker-card-icon html" style="background:var(--html-dim);color:var(--html)">&lt;/&gt;</div>
+          <div class="picker-card-name">HTML</div>
+          <div class="picker-card-count">20 questions</div>
+        </div>
+        <div class="picker-card" id="pick-CSS" onclick="selectTopic('CSS')">
+          <div class="picker-card-icon css" style="background:var(--css-dim);color:var(--css)">#{ }</div>
+          <div class="picker-card-name">CSS</div>
+          <div class="picker-card-count">20 questions</div>
+        </div>
+        <div class="picker-card" id="pick-JavaScript" onclick="selectTopic('JavaScript')">
+          <div class="picker-card-icon js" style="background:var(--js-dim);color:var(--js)">JS</div>
+          <div class="picker-card-name">JavaScript</div>
+          <div class="picker-card-count">20 questions</div>
+        </div>
+      </div>
+      <div class="picker-start">
+        <button class="btn btn-primary" onclick="startQuiz()">Start Quiz →</button>
+      </div>
+    </div>
+    <!-- Active Quiz -->
+    <div id="quiz-active">
+      <div class="quiz-top">
+        <div class="quiz-breadcrumb">
+          <span id="q-topic"></span>
+          <span class="sep">/</span>
+          <span class="current" id="q-count"></span>
+        </div>
+        <div class="quiz-top-right"><div class="streak" id="streak"></div><div class="quiz-timer" id="q-timer">⏱ <span id="timer-val">30</span>s</div></div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="q-progress"></div></div>
+      <div class="q-number" id="q-num-label"></div>
+      <div class="q-text" id="q-text"></div>
+      <div class="options" id="q-options"></div>
+      <div class="explanation-box" id="q-explanation"></div>
+      <div class="quiz-footer">
+        <button class="skip-btn" onclick="skipQuestion()">Skip →</button>
+        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none">Next →</button>
+      </div>
+    </div>
+    <!-- Result -->
+    <div id="quiz-result">
+      <div class="result-header">
+        <div class="result-score-ring">
+          <div class="result-score-n" id="res-pct"></div>
+          <div class="result-score-label">score</div>
+        </div>
+        <div class="result-title" id="res-title"></div>
+        <div class="result-sub" id="res-sub"></div>
+        <div id="res-best"></div>
+      </div>
+      <div class="result-grid">
+        <div class="result-stat">
+          <div class="result-stat-n" id="res-correct" style="color:var(--success)"></div>
+          <div class="result-stat-l">Correct</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-n" id="res-wrong" style="color:var(--danger)"></div>
+          <div class="result-stat-l">Wrong</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-n" id="res-skipped" style="color:var(--text2)"></div>
+          <div class="result-stat-l">Skipped</div>
+        </div>
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+        <button class="btn btn-ghost" onclick="reviewNotes()">Review Notes</button>
+        <button class="btn btn-ghost" onclick="showPage('quiz')">New Topic</button>
+      </div>
+    </div>
+  </div>
+</section>
+<canvas id="confetti"></canvas>
+<script src="script.js"></script>
+</body>
+</html>
